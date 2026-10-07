@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniWork — Student Microjobs</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#5b5ce2">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brandmark">U</div><div><b>UniWork</b><span>Student Hub</span></div></div>
+    <nav>
+      <button class="nav active" data-page="home">⌂ <span>Главная</span></button>
+      <button class="nav" data-page="jobs">▣ <span>Подработки</span></button>
+      <button class="nav" data-page="schedule">◷ <span>Умное окно</span></button>
+      <button class="nav" data-page="applications">✓ <span>Мои заявки</span><i id="appBadge">2</i></button>
+      <button class="nav" data-page="earnings">₸ <span>Заработок</span></button>
+      <button class="nav" data-page="materials">▤ <span>Материалы</span></button>
+      <button class="nav" data-page="support">♡ <span>Поддержка</span></button>
+      <button class="nav" data-page="portfolio">★ <span>Портфолио</span></button>
+    </nav>
+    <div class="side-bottom">
+      <button class="profile-mini" data-page="profile"><div class="avatar">З</div><div><b>Зухра</b><span>Студент</span></div><span>›</span></button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="mobile-brand"><b>UniWork</b></div>
+      <div class="search"><span>⌕</span><input id="globalSearch" placeholder="Найти подработку, навык или материал"></div>
+      <div class="top-actions"><button class="iconbtn">♢</button><div class="avatar">З</div></div>
+    </header>
+
+    <section id="page-home" class="page active">
+      <div class="welcome">
+        <div><p class="eyebrow">СРЕДА, 7 ОКТЯБРЯ</p><h1>Привет, Зухра 👋</h1><p>Задания подобраны под твою специальность — Информатика.</p></div>
+        <button class="primary" data-page="jobs">Найти подработку →</button>
+      </div>
+      <div class="profession-banner card">
+        <div class="profession-icon">💻</div>
+        <div><span>МОЯ СПЕЦИАЛЬНОСТЬ</span><b>Информатика · Педагогическое образование</b><small>UniWork использует специальность и навыки, чтобы искать профильные задания.</small></div>
+        <button class="secondary" onclick="openProfession()">Изменить</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><span>Доступно сегодня</span><b>8 500 ₸</b><small>на подходящих задачах</small></div>
+        <div class="stat"><span>Свободное окно</span><b>14:30–17:00</b><small>2 ч 30 мин</small></div>
+        <div class="stat"><span>Рейтинг</span><b>4.9 ★</b><small>12 выполненных задач</small></div>
+        <div class="stat"><span>В портфолио</span><b>12</b><small>подтверждённых навыков</small></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head"><div><h2>Умное окно</h2><p>Подобрали под ваш свободный график</p></div><button class="link" data-page="schedule">Открыть →</button></div>
+          <div class="smart-job">
+            <div class="job-icon">📦</div><div class="job-info"><b>Инвентаризация</b><span>Сегодня · 14:30–17:00 · 1.2 км</span><strong>4 500 ₸</strong></div><span class="match">96%</span>
+          </div>
+          <div class="smart-job">
+            <div class="job-icon">📱</div><div class="job-info"><b>Контент для кофейни</b><span>Сегодня · 17:30–19:30 · 0.8 км</span><strong>3 500 ₸</strong></div><span class="match">91%</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><h2>Мои заявки</h2><p>Последние статусы</p></div><button class="link" data-page="applications">Все →</button></div>
+          <div id="homeApps"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Рекомендованные задачи</h2><p>На основе ваших навыков и расписания</p></div><button class="link" data-page="jobs">Все задачи →</button></div>
+        <div id="homeJobs" class="job-list"></div>
+      </div>
+    </section>
+
+    <section id="page-jobs" class="page">
+      <div class="page-title"><div><p class="eyebrow">РАБОТА И ОПЫТ</p><h1>Подработки</h1><p>Микрозадачи, которые помещаются в вашу жизнь.</p></div></div>
+      <div class="filters"><button class="filter active" data-filter="all">Все</button><button class="filter" data-filter="near">Рядом</button><button class="filter" data-filter="online">Онлайн</button><button class="filter" data-filter="today">Сегодня</button><button class="filter" data-filter="high">От 4 000 ₸</button></div>
+      <div id="allJobs" class="job-list"></div>
+    </section>
+
+    <section id="page-schedule" class="page">
+      <div class="page-title"><div><p class="eyebrow">FLEX-TIME MATCHING</p><h1>Умное окно</h1><p>UniWork ищет задачи, которые не конфликтуют с учёбой.</p></div></div>
+      <div class="schedule-layout">
+        <div class="card">
+          <div class="card-head"><div><h2>Ваше расписание</h2><p>Можно изменить в любой момент</p></div><button class="secondary" id="addFree">+ Свободное окно</button></div>
+          <div class="days">
+            <div class="day"><b>ПН</b><span>08:00–14:00</span><em>пары</em></div>
+            <div class="day active-day"><b>ВТ</b><span>10:00–16:00</span><em>пары</em></div>
+            <div class="day selected"><b>СР</b><span>08:00–12:00</span><em>пары</em></div>
+            <div class="day"><b>ЧТ</b><span>09:00–15:00</span><em>пары</em></div>
+            <div class="day"><b>ПТ</b><span>08:00–13:00</span><em>пары</em></div>
+          </div>
+          <div class="free-window"><span>✓</span><div><b>Сегодня свободно</b><p>12:00–18:00 · 6 часов</p></div><strong>6 ч</strong></div>
+          <div class="smart-result"><span class="pulse"></span><div><b>Найдено 5 подходящих задач</b><p>Без пересечения с парами · до 3 км</p></div><b>96% match</b></div>
+        </div>
+        <div class="card">
+          <h2>Как работает</h2>
+          <div class="steps">
+            <div><i>1</i><span><b>Добавьте расписание</b><small>Вручную или из календаря</small></span></div>
+            <div><i>2</i><span><b>Укажите предпочтения</b><small>Район, длительность, доход</small></span></div>
+            <div><i>3</i><span><b>Получите совпадения</b><small>Алгоритм учитывает свободные окна</small></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-head"><div><h2>Лучшие совпадения</h2><p>Чем выше процент, тем лучше подходит задача</p></div></div><div id="smartJobs" class="job-list"></div></div>
+    </section>
+
+    <section id="page-applications" class="page">
+      <div class="page-title"><div><p class="eyebrow">МОЯ АКТИВНОСТЬ</p><h1>Мои заявки</h1><p>Следите за откликами и выполненными задачами.</p></div></div>
+      <div id="applicationsList"></div>
+    </section>
+
+    <section id="page-earnings" class="page">
+      <div class="page-title"><div><p class="eyebrow">ФИНАНСЫ</p><h1>Заработок</h1><p>Все выплаты и выполненные задачи в одном месте.</p></div><button class="primary">Вывести деньги</button></div>
+      <div class="money-hero"><div><span>Доступно к выводу</span><strong id="balance">37 500 ₸</strong><small>Следующая выплата — после подтверждения</small></div><div class="money-chart"><span style="height:35%"></span><span style="height:50%"></span><span style="height:42%"></span><span style="height:70%"></span><span style="height:58%"></span><span style="height:86%"></span><span style="height:72%"></span></div></div>
+      <div class="stats compact"><div class="stat"><span>За неделю</span><b>12 500 ₸</b></div><div class="stat"><span>За месяц</span><b>37 500 ₸</b></div><div class="stat"><span>Выполнено</span><b id="completedCount">12</b></div></div>
+      <div class="card"><div class="card-head"><h2>История операций</h2></div><div id="transactions"></div></div>
+    </section>
+
+    <section id="page-materials" class="page">
+      <div class="page-title"><div><p class="eyebrow">MARKETPLACE</p><h1>Учебные материалы</h1><p>Конспекты, гайды и консультации от студентов.</p></div><button class="primary">+ Продать материал</button></div>
+      <div class="material-grid" id="materialsGrid"></div>
+    </section>
+
+    <section id="page-support" class="page">
+      <div class="page-title"><div><p class="eyebrow">ПОДДЕРЖКА</p><h1>Ты не один</h1><p>Безопасное пространство для вопросов, адаптации и поддержки.</p></div></div>
+      <div class="support-grid">
+        <div class="support-card featured"><span class="support-icon">♡</span><h2>Поговорить с психологом</h2><p>Анонимный чат с квалифицированным специалистом или волонтёром под супервизией.</p><button class="primary" id="supportBtn">Начать чат</button><small>Конфиденциально · бесплатно</small></div>
+        <div class="support-card"><span class="support-icon">◉</span><h2>Проверка выгорания</h2><p>Короткий самотест, который поможет заметить тревожные сигналы.</p><button class="secondary" id="burnoutBtn">Пройти тест</button></div>
+        <div class="support-card"><span class="support-icon">◎</span><h2>Студент студенту</h2><p>Задать вопрос старшекурсникам о предметах, общежитии или университете.</p><button class="secondary" data-page="materials">Найти помощь</button></div>
+      </div>
+    </section>
+
+    <section id="page-portfolio" class="page">
+      <div class="page-title"><div><p class="eyebrow">DIGITAL CV</p><h1>Моё портфолио</h1><p>Опыт формируется автоматически из подтверждённых задач.</p></div><button class="secondary">Скачать CV</button></div>
+      <div class="portfolio-head card"><div class="big-avatar">З</div><div class="portfolio-main"><h2>Зухра Битімбай</h2><p>Студент · Информатика · 1 курс</p><div class="tags"><span>Ответственность</span><span>Excel</span><span>SMM</span><span>Коммуникация</span></div></div><div class="rating"><b>4.9</b><span>★ рейтинг</span></div></div>
+      <div class="stats"><div class="stat"><span>Выполнено задач</span><b id="portCompleted">12</b></div><div class="stat"><span>Работодателей</span><b>7</b></div><div class="stat"><span>Доход</span><b>47 500 ₸</b></div><div class="stat"><span>Навыков</span><b>9</b></div></div>
+      <div class="card"><div class="card-head"><h2>Подтверждённый опыт</h2></div><div id="portfolioItems"></div></div>
+    </section>
+
+    <section id="page-profile" class="page">
+      <div class="page-title"><div><p class="eyebrow">ПРОФИЛЬ</p><h1>Настройки</h1><p>Ваши данные и предпочтения.</p></div></div>
+      <div class="card profile-card"><div class="big-avatar">З</div><div><h2>Зухра Битімбай</h2><p>Студент · Информатика</p><span class="verified">✓ Профиль подтверждён</span></div><button class="secondary">Редактировать</button></div>
+      <div class="card settings"><div><b>Предпочтения работы</b><span>Рядом с университетом · 2–4 часа · от 3 000 ₸</span></div><div><b>Уведомления</b><span>Новые задачи · сообщения · выплаты</span></div><div><b>Безопасная сделка</b><span>Включена ✓</span></div></div>
+    </section>
+  </main>
+</div>
+<nav class="mobile-nav">
+  <button data-page="home">⌂<span>Главная</span></button>
+  <button data-page="jobs">▣<span>Задания</span></button>
+  <button data-page="schedule">◷<span>Окна</span></button>
+  <button data-page="earnings">₸<span>Доход</span></button>
+  <button data-page="profile">◯<span>Профиль</span></button>
+</nav>
+<div id="modal" class="modal"><div class="modal-box"><button class="close" id="closeModal">×</button><div id="modalContent"></div></div></div>
+<div id="toast" class="toast"></div>
+<script src="script.js"></script><script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}</script>
+</body>
+</html>
